@@ -8,7 +8,7 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: prometheus
+  name: kube-prometheus-stack
   namespace: argocd
 spec:
   clusterResourceWhitelist:
@@ -27,17 +27,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus
+  name: kube-prometheus-stack
   namespace: argocd
 spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
-  project: prometheus
+  project: kube-prometheus-stack
   source:
-    repoURL: https://github.com/bitnami/charts.git
+    repoURL: https://github.com/prometheus-community/helm-charts.git
     targetRevision: main
-    path: ./bitnami/kube-prometheus
+    path: ./charts/kube-prometheus-stack
   syncPolicy:
     syncOptions:
     - ServerSideApply=true
