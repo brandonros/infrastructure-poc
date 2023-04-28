@@ -1,9 +1,9 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: grafana
+  name: monitoring
   labels:
-    name: grafana
+    name: monitoring
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -15,7 +15,7 @@ spec:
   - group: '*'
     kind: '*'
   destinations:
-  - namespace: grafana
+  - namespace: monitoring
     server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
@@ -30,7 +30,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: grafana
+    namespace: monitoring
   project: grafana
   source:
     repoURL: https://github.com/bitnami/charts.git
