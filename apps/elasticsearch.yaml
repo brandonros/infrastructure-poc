@@ -1,0 +1,54 @@
+# get password with kubectl -n elk get secret elasticsearch-master-credentials -o json | jq -r '.data.password' | base64 -d
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: elk
+  labels:
+    name: elk
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: elasticsearch
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: elk
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elasticsearch
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: elk
+  project: elasticsearch
+  source:
+    repoURL: https://github.com/elastic/helm-charts.git
+    targetRevision: "v8.5.1"
+    path: ./elasticsearch
+    helm:
+      parameters:
+      - name: "minimumMasterNodes"
+        value: "1"
+      - name: "replicas"
+        value: "1"
+      - name: "resources.requests.cpu"
+        value: "0"
+      - name: "resources.requests.memory"
+        value: "0"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false

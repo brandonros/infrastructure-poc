@@ -1,0 +1,61 @@
+# DOCKER_REGISTRY_CLUSTER_IP=$(kubectl -n docker-registry get service/docker-registry -o=jsonpath='{.spec.clusterIP}')
+# PORT=5000
+# EXTERNAL_REGISTRY_URL="$DOCKER_REGISTRY_CLUSTER_IP:$PORT" # do not use kubernetes internal DNS because kubernetes node does not pull from pod context aka no access to internal DNS
+# ELASTICSEARCH_USERNAME=$(kubectl -n elk get secret elasticsearch-master-credentials -o json | jq -r '.data.username' | base64 -d)
+# ELASTICSEARCH_PASSWORD=$(kubectl -n elk get secret elasticsearch-master-credentials -o json | jq -r '.data.password' | base64 -d)
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: app
+  labels:
+    name: loki
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: app
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: app
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: app
+  project: app
+  source:
+    repoURL: https://github.com/brandonros/argocd-poc.git
+    targetRevision: master
+    path: ./app/helm
+    helm:
+      parameters:
+      - name: "image.repository"
+        value: "todo"
+      - name: "image.tag"
+        value: "todo"
+      - name: "env.ELASTICSEARCH_USERNAME"
+        value: "elastic"
+      - name: "env.ELASTICSEARCH_PASSWORD"
+        value: "todo"
+      - name: "env.ELASTICSEARCH_URL"
+        value: "https://elasticsearch-master-headless.elk.svc.cluster.local:9200"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+  revisionHistoryLimit: 1
