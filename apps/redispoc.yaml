@@ -39,8 +39,8 @@ spec:
     helm:
       parameters:
       - name: "image.repository"
-        value: "azurepocsandboxaksacr.azurecr.io/redispoc"
+        value: "azurepocsandboxaksacr.azurecr.io"
       - name: "image.tag"
-        value: "0.0.1"
+        value: "redispoc:0.0.1"
       - name: "env.REDIS_CONNECTION_STRING"
         value: "redis-master.redis.svc"

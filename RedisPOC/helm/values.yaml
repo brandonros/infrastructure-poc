@@ -6,8 +6,6 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 service:
-  type: ClusterIP
-  port: 3000
 serviceAccount:
   create: false
 autoscaling:
