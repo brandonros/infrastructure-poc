@@ -35,4 +35,4 @@ spec:
   source:
     repoURL: https://github.com/hansehe/jaeger-all-in-one.git
     targetRevision: master
-    path: ./helm
+    path: ./helm/jaeger-all-in-one/

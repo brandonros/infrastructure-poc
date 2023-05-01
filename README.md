@@ -29,8 +29,8 @@ kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard 8443:443
 ## How to tunnel (Jaeger)
 
 ```shell
-kubectl port-forward svc/jaeger-query -n jaeger 16686:16686
-# open browser to https://localhost:16686
+kubectl port-forward svc/jaeger-jaeger-all-in-one -n jaeger 16686:16686
+# open browser to http://localhost:16686
 ```
 
 ## How to tunnel (Grafana)
