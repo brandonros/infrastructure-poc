@@ -19,6 +19,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: kube-system
     server: https://kubernetes.default.svc
+  - namespace: microservice-poc
+    server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
   sourceRepos:
@@ -38,6 +40,23 @@ spec:
     repoURL: https://github.com/prometheus-community/helm-charts.git
     targetRevision: main
     path: ./charts/kube-prometheus-stack
+    helm:
+      values: |
+        prometheus:
+          additionalServiceMonitors:
+            - name: microservice-poc-app
+              namespace: monitoring
+              selector:
+                matchLabels:
+                  name: microservice-poc-app
+              namespaceSelector:
+                matchNames:
+                  - microservice-poc
+              endpoints:
+                - path: /metrics
+                  targetPort: 3000
+                  scheme: http
+                  scrapeTimeout: 10s
   syncPolicy:
     syncOptions:
     - ServerSideApply=true

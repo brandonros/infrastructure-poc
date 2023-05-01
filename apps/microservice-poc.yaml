@@ -59,6 +59,8 @@ spec:
       - name: "env.ZIPKIN_EXPORTER_ENDPOINT"
         value: "http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans"
       values: |
+        image:
+          imagePullPolicy: Always
         podAnnotations:
           prometheus.io/scrape: "true"
           prometheus.io/path: "/metrics"
