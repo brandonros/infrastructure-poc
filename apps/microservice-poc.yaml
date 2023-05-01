@@ -1,0 +1,53 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: microservice-poc
+  labels:
+    name: microservice-poc
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: microservice-poc
+  name: redis-connection-string
+type: Opaque
+data:
+  value: cmVkaXMtbWFzdGVyLnJlZGlzLnN2YyxwYXNzd29yZD1tTU9XV1BXN0JJ
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: microservice-poc
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: microservice-poc
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: microservice-poc
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: microservice-poc
+  project: microservice-poc
+  source:
+    repoURL: https://github.com/brandonros/infrastructure-poc.git
+    targetRevision: vitalii
+    path: ./microservice-poc/helm
+    helm:
+      parameters:
+      - name: "image.repository"
+        value: "azurepocsandboxaksacr.azurecr.io"
+      - name: "image.tag"
+        value: "microservice-poc:0.0.1"

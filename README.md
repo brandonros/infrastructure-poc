@@ -63,9 +63,18 @@ kubectl -n redis get secret redis -o json | jq -r '.data["redis-password"]' | ba
 kubectl port-forward svc/redis-master -n redis 6379:6379
 ```
 
-## How to build (RedisPOC)
+## How to build (ConsolePOC)
 
 ```shell
-docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/redispoc:0.0.1 .
-docker push azurepocsandboxaksacr.azurecr.io/redispoc:0.0.1
+cd ConsolePOC
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/console-poc:0.0.1 .
+docker push azurepocsandboxaksacr.azurecr.io/console-poc:0.0.1
+ ```
+
+ ## How to build (MicroservicePOC)
+
+```shell
+cd MicroservicePOC
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.1 .
+docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.1
  ```

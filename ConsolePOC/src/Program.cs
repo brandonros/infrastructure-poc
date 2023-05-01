@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace RedisPOC
+namespace ConsolePOC
 {
     class Program {
         static int Main(string[] args)

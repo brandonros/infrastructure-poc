@@ -1,21 +1,30 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: redispoc
+  name: console-poc
   labels:
-    name: redispoc
+    name: console-poc
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: console-poc
+  name: redis-connection-string
+type: Opaque
+data:
+  value: cmVkaXMtbWFzdGVyLnJlZGlzLnN2YyxwYXNzd29yZD1tTU9XV1BXN0JJ
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: redispoc
+  name: console-poc
   namespace: argocd
 spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
   destinations:
-  - namespace: redispoc
+  - namespace: console-poc
     server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
@@ -25,29 +34,20 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redispoc
+  name: console-poc
   namespace: argocd
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: redispoc
-  project: redispoc
+    namespace: console-poc
+  project: console-poc
   source:
     repoURL: https://github.com/brandonros/infrastructure-poc.git
     targetRevision: vitalii
-    path: ./RedisPOC/helm
+    path: ./console-poc/helm
     helm:
       parameters:
       - name: "image.repository"
         value: "azurepocsandboxaksacr.azurecr.io"
       - name: "image.tag"
-        value: "redispoc:0.0.1"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  namespace: redispoc
-  name: redis-connection-string
-type: Opaque
-data:
-  value: cmVkaXMtbWFzdGVyLnJlZGlzLnN2YyxwYXNzd29yZD1tTU9XV1BXN0JJ
+        value: "console-poc:0.0.1"

@@ -12,13 +12,14 @@ RUN dotnet nuget add source \
     --store-password-in-clear-text
 # restore
 WORKDIR /src
-COPY src/RedisPOC.csproj RedisPOC.csproj
+COPY src/MicroservicePOC.csproj MicroservicePOC.csproj
 RUN dotnet restore
 # build
 COPY src/ src/
-RUN dotnet build /src/RedisPOC.csproj -c Debug -o /src/output --no-restore
+RUN dotnet build /src/MicroservicePOC.csproj -c Debug -o /src/output --no-restore
 # Copy only finished output (do not include source in final Docker image layer)
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /src/output .
-ENTRYPOINT ["dotnet", "RedisPOC.dll"]
+EXPOSE 3000
+ENTRYPOINT ["dotnet", "MicroservicePOC.dll"]
