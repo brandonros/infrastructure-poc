@@ -78,3 +78,10 @@ cd MicroservicePOC
 docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.4 .
 docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.4
  ```
+
+ ## How to tunnel (MicroservicePOC)
+
+```shell
+kubectl port-forward svc/microservice-poc-app -n microservice-poc 3000:3000
+# open browser to http://localhost:3000/swagger/
+```

@@ -41,6 +41,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: microservice-poc
   project: microservice-poc
+  revisionHistoryLimit: 1
   source:
     repoURL: https://github.com/brandonros/infrastructure-poc.git
     targetRevision: vitalii
