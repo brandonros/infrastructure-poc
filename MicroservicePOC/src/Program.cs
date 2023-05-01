@@ -10,14 +10,14 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "WeatherForecastApi", Version = "v1" });
 });
-builder.Services.AddSingleton<ConnectionMultiplexer>(x => 
+builder.Services.AddSingleton<IConnectionMultiplexer, ConnectionMultiplexer>(x => 
 {
     return ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING"));
 });
 builder.Services.AddScoped<IRedisService, RedisService>();
-builder.Services.AddOpenTelemetry().WithTracing(tracerProviderBuilder =>
+builder.Services.AddOpenTelemetry().WithTracing(provider =>
 {
-    tracerProviderBuilder
+    provider
         .AddSource("MicrosevicePOC")
         .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
         .AddAspNetCoreInstrumentation()
