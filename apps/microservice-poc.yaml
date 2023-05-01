@@ -58,9 +58,8 @@ spec:
         value: "http://*:3000"
       - name: "env.ZIPKIN_EXPORTER_ENDPOINT"
         value: "http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans"
-      - name: "podAnnotations.prometheus.io/scrape"
-        value: "true"
-      - name: "podAnnotations.prometheus.io/path"
-        value: "/metrics"
-      - name: "podAnnotations.prometheus.io/port"
-        value: "3000"
+      values: |
+        podAnnotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "3000"
