@@ -20,12 +20,16 @@ builder.Services.AddOpenTelemetry()
     .WithMetrics(provider =>
     {
         provider
+            .AddRuntimeInstrumentation()
+            .AddProcessInstrumentation()
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
             .AddPrometheusExporter();
     })
     .WithTracing(provider =>
     {
         provider
-        .AddSource("MicrosevicePOC")
+            .AddSource("MicrosevicePOC")
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
