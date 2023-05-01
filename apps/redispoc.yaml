@@ -43,4 +43,4 @@ spec:
       - name: "image.tag"
         value: "redispoc:0.0.1"
       - name: "env.REDIS_CONNECTION_STRING"
-        value: "redis-master.redis.svc"
+        value: "redis-master.redis.svc,password=mMOWWPW7BI"
