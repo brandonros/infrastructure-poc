@@ -1,0 +1,46 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: redispoc
+  labels:
+    name: redispoc
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: redispoc
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: redispoc
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redispoc
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: redispoc
+  project: redispoc
+  source:
+    repoURL: https://github.com/brandonros/infrastructure-poc.git
+    targetRevision: vitalii
+    path: ./RedisPOC/helm
+    helm:
+      parameters:
+      - name: "image.repository"
+        value: "azurepocsandboxaksacr.azurecr.io/redispoc"
+      - name: "image.tag"
+        value: "0.0.1"
+      - name: "env.REDIS_CONNECTION_STRING"
+        value: "redis-master.redis.svc"

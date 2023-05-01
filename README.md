@@ -59,5 +59,13 @@ kubectl port-forward svc/loki-grafana-loki-gateway -n loki 80:9090
 ## How to tunnel (Redis)
 
 ```shell
-TODO
+kubectl -n redis get secret redis -o json | jq -r '.data["redis-password"]' | base64 --decode --ignore-garbage
+kubectl port-forward svc/redis-master -n redis 6379:6379
 ```
+
+## How to build (RedisPOC)
+
+```shell
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/redispoc:0.0.1 .
+docker push azurepocsandboxaksacr.azurecr.io/redispoc:0.0.1
+ ```
