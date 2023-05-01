@@ -33,27 +33,27 @@ kubectl port-forward svc/jaeger-query -n jaeger 16686:16686
 # open browser to https://localhost:16686
 ```
 
-## How to tunnel (Prometheus)
-
-```shell
-kubectl port-forward svc/prometheus-kube-prometheus-prometheus -n monitoring 9090:9090
-# open browser to http://localhost:9090
-```
-
 ## How to tunnel (Grafana)
 
 ```shell
 # username is admin
 # get password
-kubectl -n monitoring get secret grafana-admin -o json | jq -r '.data.GF_SECURITY_ADMIN_PASSWORD' | base64 --decode --ignore-garbage
-kubectl port-forward svc/grafana -n monitoring 3000:3000
+kubectl -n monitoring get secret kube-prometheus-stack-grafana -o json | jq -r '.data["admin-password"]' | base64 --decode --ignore-garbage
+kubectl port-forward svc/kube-prometheus-stack-grafana -n monitoring 3000:80
 # open browser to http://localhost:3000
+```
+
+## How to tunnel (Prometheus)
+
+```shell
+kubectl port-forward svc/kube-prometheus-stack-prometheus -n monitoring 9090:9090
+# open browser to http://localhost:9090
 ```
 
 ## How to tunnel (Loki)
 
 ```shell
-TODO
+kubectl port-forward svc/loki-grafana-loki-gateway -n loki 80:9090
 ```
 
 ## How to tunnel (Redis)

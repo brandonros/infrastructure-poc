@@ -1,9 +1,9 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: loki
+  name: monitoring
   labels:
-    name: loki
+    name: monitoring
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -15,7 +15,7 @@ spec:
   - group: '*'
     kind: '*'
   destinations:
-  - namespace: loki
+  - namespace: monitoring
     server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
@@ -30,9 +30,9 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: loki
+    namespace: monitoring
   project: loki
   source:
-    repoURL: https://github.com/bitnami/charts.git
+    repoURL: https://github.com/grafana/helm-charts.git
     targetRevision: main
-    path: ./bitnami/grafana-loki
+    path: ./charts/loki-stack

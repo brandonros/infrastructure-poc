@@ -33,6 +33,6 @@ spec:
     namespace: jaeger
   project: jaeger
   source:
-    repoURL: https://github.com/bitnami/charts.git
-    targetRevision: main
-    path: ./bitnami/jaeger
+    repoURL: https://github.com/hansehe/jaeger-all-in-one.git
+    targetRevision: master
+    path: ./helm
