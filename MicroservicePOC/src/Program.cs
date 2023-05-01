@@ -1,6 +1,7 @@
 ﻿using MicroservicePOC.Services;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Metrics;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,19 +16,25 @@ builder.Services.AddSingleton<IConnectionMultiplexer, ConnectionMultiplexer>(x =
     return ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING"));
 });
 builder.Services.AddScoped<IRedisService, RedisService>();
-builder.Services.AddOpenTelemetry().WithTracing(provider =>
-{
-    provider
+builder.Services.AddOpenTelemetry()
+    .WithMetrics(provider =>
+    {
+        provider
+            .AddPrometheusExporter();
+    })
+    .WithTracing(provider =>
+    {
+        provider
         .AddSource("MicrosevicePOC")
-        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
-        .AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .AddRedisInstrumentation()
-        .AddZipkinExporter(o =>
-        {
-            o.Endpoint = new Uri(Environment.GetEnvironmentVariable("ZIPKIN_EXPORTER_ENDPOINT"));
-        });
-});
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddRedisInstrumentation()
+            .AddZipkinExporter(o =>
+            {
+                o.Endpoint = new Uri(Environment.GetEnvironmentVariable("ZIPKIN_EXPORTER_ENDPOINT"));
+            });
+    });
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (builder.Environment.IsDevelopment())
@@ -38,5 +45,6 @@ if (builder.Environment.IsDevelopment())
 }
 //app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.MapControllers();
 app.Run();
