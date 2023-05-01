@@ -75,8 +75,8 @@ docker push azurepocsandboxaksacr.azurecr.io/console-poc:0.0.1
 
 ```shell
 cd MicroservicePOC
-docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.5 .
-docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.5
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:latest .
+docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:latest
  ```
 
  ## How to tunnel (MicroservicePOC)
