@@ -34,11 +34,11 @@ spec:
           image: "{{ .Values.image.repository }}/{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          - name: REDIS_CONNECTION_STRING
-            valueFrom:
-              secretKeyRef:
-                name: redis-connection-string
-                key: value
+            - name: REDIS_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: redis-connection-string
+                  key: value
           {{- range $key, $val := .Values.env }}
             - name: {{ $key }}
               value: {{ $val | quote }}
