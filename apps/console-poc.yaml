@@ -44,7 +44,7 @@ spec:
   source:
     repoURL: https://github.com/brandonros/infrastructure-poc.git
     targetRevision: vitalii
-    path: ./console-poc/helm
+    path: ./ConsolePOC/helm
     helm:
       parameters:
       - name: "image.repository"

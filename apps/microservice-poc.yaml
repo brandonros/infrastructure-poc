@@ -44,10 +44,10 @@ spec:
   source:
     repoURL: https://github.com/brandonros/infrastructure-poc.git
     targetRevision: vitalii
-    path: ./microservice-poc/helm
+    path: ./MicroservicePOC/helm
     helm:
       parameters:
       - name: "image.repository"
         value: "azurepocsandboxaksacr.azurecr.io"
       - name: "image.tag"
-        value: "microservice-poc:0.0.1"
+        value: "microservice-poc:0.0.2"
