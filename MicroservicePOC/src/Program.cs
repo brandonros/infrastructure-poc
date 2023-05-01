@@ -1,4 +1,6 @@
 ﻿using MicroservicePOC.Services;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +12,21 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddSingleton<ConnectionMultiplexer>(x => 
 {
-    string connectionString = System.Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING");
-    return ConnectionMultiplexer.Connect(connectionString);
+    return ConnectionMultiplexer.Connect(Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING"));
 });
 builder.Services.AddScoped<IRedisService, RedisService>();
+builder.Services.AddOpenTelemetry().WithTracing(tracerProviderBuilder =>
+{
+    tracerProviderBuilder
+        .AddSource("MicrosevicePOC")
+        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddZipkinExporter(o =>
+        {
+            o.Endpoint = new Uri(Environment.GetEnvironmentVariable("ZIPKIN_EXPORTER_ENDPOINT"));
+        });
+});
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (builder.Environment.IsDevelopment())

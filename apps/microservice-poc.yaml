@@ -56,3 +56,5 @@ spec:
         value: "Development"
       - name: "env.ASPNETCORE_URLS"
         value: "http://*:3000"
+      - name: "env.ZIPKIN_EXPORTER_ENDPOINT"
+        value: "http://jaeger-jaeger-all-in-one.jaeger.svc:9411"

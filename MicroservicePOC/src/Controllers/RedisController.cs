@@ -19,7 +19,7 @@ public class RedisController : ControllerBase
     public async Task<IActionResult> Get(string keyName)
     {
         _logger.LogInformation("redis");
-        var value = _redisService.Get(keyName);
+        var value = await _redisService.Get(keyName);
         return new OkObjectResult(value);
     }
 }
