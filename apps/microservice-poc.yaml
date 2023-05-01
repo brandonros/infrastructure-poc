@@ -50,4 +50,6 @@ spec:
       - name: "image.repository"
         value: "azurepocsandboxaksacr.azurecr.io"
       - name: "image.tag"
-        value: "microservice-poc:0.0.2"
+        value: "microservice-poc:0.0.3"
+      - name: "env.ASPNETCORE_ENVIRONMENT"
+        value: "Development"
