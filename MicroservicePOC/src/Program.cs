@@ -22,6 +22,7 @@ builder.Services.AddOpenTelemetry().WithTracing(tracerProviderBuilder =>
         .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
+        .AddRedisInstrumentation()
         .AddZipkinExporter(o =>
         {
             o.Endpoint = new Uri(Environment.GetEnvironmentVariable("ZIPKIN_EXPORTER_ENDPOINT"));
