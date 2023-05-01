@@ -42,5 +42,11 @@ spec:
         value: "azurepocsandboxaksacr.azurecr.io"
       - name: "image.tag"
         value: "redispoc:0.0.1"
-      - name: "env.REDIS_CONNECTION_STRING"
-        value: "redis-master.redis.svc,password=mMOWWPW7BI"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-connection-string
+type: Opaque
+data:
+  value: cmVkaXMtbWFzdGVyLnJlZGlzLnN2YyxwYXNzd29yZD1tTU9XV1BXN0JJ
