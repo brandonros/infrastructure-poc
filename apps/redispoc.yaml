@@ -46,6 +46,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
+  namespace: redispoc
   name: redis-connection-string
 type: Opaque
 data:
