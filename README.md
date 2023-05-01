@@ -75,6 +75,6 @@ docker push azurepocsandboxaksacr.azurecr.io/console-poc:0.0.1
 
 ```shell
 cd MicroservicePOC
-docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.3 .
-docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.3
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.4 .
+docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:0.0.4
  ```
