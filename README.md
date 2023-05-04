@@ -4,6 +4,9 @@ Kubernetes YAML deploying ArgoCD applications via Helm charts
 ## How to deploy
 
 ```shell
+git clone git@github.com:brandonros/infrastructure-poc.git
+cd infrastructure-poc
+git checkout vitalii
 kubectl apply -f apps/
 ```
 
