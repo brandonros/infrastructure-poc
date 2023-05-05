@@ -2,6 +2,6 @@
 {
     public class ApiCallRequest
     {
-        public string url;
+        public string url { get; set; }
     }
 }

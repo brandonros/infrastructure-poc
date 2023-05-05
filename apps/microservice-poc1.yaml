@@ -56,6 +56,7 @@ spec:
           ASPNETCORE_ENVIRONMENT: Development
           ASPNETCORE_URLS: http://*:3000
           ZIPKIN_EXPORTER_ENDPOINT: http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans
+          APP_NAME: MicroservicePOC1
         podAnnotations:
           prometheus.io/scrape: "true"
           prometheus.io/path: "/metrics"

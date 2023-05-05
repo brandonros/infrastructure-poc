@@ -28,9 +28,10 @@ builder.Services.AddOpenTelemetry()
     })
     .WithTracing(provider =>
     {
+        var appName = Environment.GetEnvironmentVariable("APP_NAME");
         provider
-            .AddSource("MicrosevicePOC")
-            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
+            .AddSource(appName)
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(appName))
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
             .AddRedisInstrumentation()
