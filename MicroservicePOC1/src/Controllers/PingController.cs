@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MicroservicePOC.Controllers;
+namespace MicroservicePOC1.Controllers;
 [ApiController]
 [Route("ping")]
 public class PingController : ControllerBase

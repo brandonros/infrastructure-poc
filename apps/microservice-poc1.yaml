@@ -1,14 +1,14 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: microservice-poc
+  name: microservice-poc1
   labels:
-    name: microservice-poc
+    name: microservice-poc1
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  namespace: microservice-poc
+  namespace: microservice-poc1
   name: redis-connection-string
 type: Opaque
 data:
@@ -17,14 +17,14 @@ data:
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: microservice-poc
+  name: microservice-poc1
   namespace: argocd
 spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
   destinations:
-  - namespace: microservice-poc
+  - namespace: microservice-poc1
     server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
@@ -34,33 +34,28 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: microservice-poc
+  name: microservice-poc1
   namespace: argocd
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: microservice-poc
-  project: microservice-poc
+    namespace: microservice-poc1
+  project: microservice-poc1
   revisionHistoryLimit: 1
   source:
     repoURL: https://github.com/brandonros/infrastructure-poc.git
     targetRevision: vitalii
-    path: ./MicroservicePOC/helm
+    path: ./MicroservicePOC1/helm
     helm:
-      parameters:
-      - name: "image.repository"
-        value: "azurepocsandboxaksacr.azurecr.io"
-      - name: "image.tag"
-        value: "microservice-poc:latest"
-      - name: "env.ASPNETCORE_ENVIRONMENT"
-        value: "Development"
-      - name: "env.ASPNETCORE_URLS"
-        value: "http://*:3000"
-      - name: "env.ZIPKIN_EXPORTER_ENDPOINT"
-        value: "http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans"
       values: |
         image:
+          repository: azurepocsandboxaksacr.azurecr.io
+          tag: microservice-poc1:latest
           imagePullPolicy: Always
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
+          ASPNETCORE_URLS: http://*:3000
+          ZIPKIN_EXPORTER_ENDPOINT: http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans
         podAnnotations:
           prometheus.io/scrape: "true"
           prometheus.io/path: "/metrics"

@@ -74,17 +74,33 @@ docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -
 docker push azurepocsandboxaksacr.azurecr.io/console-poc:0.0.1
  ```
 
- ## How to build (MicroservicePOC)
+## How to build (MicroservicePOC1)
 
 ```shell
-cd MicroservicePOC
-docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc:latest .
-docker push azurepocsandboxaksacr.azurecr.io/microservice-poc:latest
- ```
+cd MicroservicePOC1
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc1:latest .
+docker push azurepocsandboxaksacr.azurecr.io/microservice-poc1:latest
+```
 
- ## How to tunnel (MicroservicePOC)
+## How to build (MicroservicePOC2)
 
 ```shell
-kubectl port-forward svc/microservice-poc-app -n microservice-poc 3000:3000
+cd MicroservicePOC2
+docker build --build-arg ARTIFACTORY_USERNAME --build-arg ARTIFACTORY_PASSWORD -t azurepocsandboxaksacr.azurecr.io/microservice-poc2:latest .
+docker push azurepocsandboxaksacr.azurecr.io/microservice-poc2:latest
+```
+
+
+## How to tunnel (MicroservicePOC1)
+
+```shell
+kubectl port-forward svc/microservice-poc1-app -n microservice-poc1 3000:3000
+# open browser to http://localhost:3000/swagger/
+```
+
+## How to tunnel (MicroservicePOC2)
+
+```shell
+kubectl port-forward svc/microservice-poc2-app -n microservice-poc2 3000:3000
 # open browser to http://localhost:3000/swagger/
 ```

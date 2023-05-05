@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using MicroservicePOC.Model;
+using MicroservicePOC1.Model;
 
-namespace MicroservicePOC.Controllers;
+namespace MicroservicePOC1.Controllers;
 [ApiController]
 [Route("weather")]
 public class WeatherForecastController : ControllerBase

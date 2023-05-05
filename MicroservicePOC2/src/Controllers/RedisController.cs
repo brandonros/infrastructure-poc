@@ -1,7 +1,7 @@
-using MicroservicePOC.Services;
+using MicroservicePOC2.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MicroservicePOC.Controllers;
+namespace MicroservicePOC2.Controllers;
 [ApiController]
 [Route("redis")]
 public class RedisController : ControllerBase

@@ -1,4 +1,4 @@
-namespace MicroservicePOC.Services
+namespace MicroservicePOC2.Services
 {
   public interface IRedisService
   {

@@ -37,6 +37,5 @@ spec:
     targetRevision: master
     path: ./helm/jaeger-all-in-one/
     helm:
-      parameters:
-      - name: "enableHttpZipkinCollector"
-        value: "true"
+      values: |
+        enableHttpZipkinCollector: true
