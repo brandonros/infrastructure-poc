@@ -1,4 +1,4 @@
-namespace MicroservicePOC2.Model;
+namespace MicroservicePOC.Model;
 
 public class WeatherForecast
 {

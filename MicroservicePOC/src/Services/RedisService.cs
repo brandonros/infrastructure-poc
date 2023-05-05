@@ -1,6 +1,6 @@
 `using StackExchange.Redis;
 
-namespace MicroservicePOC2.Services
+namespace MicroservicePOC.Services
 {
   public class RedisService : IRedisService
   {

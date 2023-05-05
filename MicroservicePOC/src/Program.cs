@@ -1,4 +1,4 @@
-﻿using MicroservicePOC2.Services;
+﻿using MicroservicePOC.Services;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
@@ -29,8 +29,8 @@ builder.Services.AddOpenTelemetry()
     .WithTracing(provider =>
     {
         provider
-            .AddSource("MicrosevicePOC2")
-            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC2"))
+            .AddSource("MicrosevicePOC")
+            .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MicrosevicePOC"))
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
             .AddRedisInstrumentation()

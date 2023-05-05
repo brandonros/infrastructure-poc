@@ -45,12 +45,12 @@ spec:
   source:
     repoURL: https://github.com/brandonros/infrastructure-poc.git
     targetRevision: vitalii
-    path: ./MicroservicePOC1/helm
+    path: ./MicroservicePOC/helm
     helm:
       values: |
         image:
           repository: azurepocsandboxaksacr.azurecr.io
-          tag: microservice-poc1:latest
+          tag: microservice-poc:latest
           imagePullPolicy: Always
         env:
           ASPNETCORE_ENVIRONMENT: Development

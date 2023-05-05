@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "MicroservicePOC1": {
+    "MicroservicePOC": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
