@@ -53,10 +53,22 @@ kubectl port-forward svc/kube-prometheus-stack-prometheus -n monitoring 9090:909
 # open browser to http://localhost:9090
 ```
 
-## How to tunnel (Loki)
+## How to tunnel (Elasticsearch)
 
 ```shell
-kubectl port-forward svc/loki-grafana-loki-gateway -n loki 80:9090
+kubectl -n logging get secret elasticsearch-master-credentials -o json | jq -r '.data.password' | base64 --decode --ignore-garbage
+kubectl port-forward svc/elasticsearch-master-headless -n logging 9200:9200
+# api will be at http://localhost:9200
+```
+
+## How to tunnel (Kibana)
+
+```shell
+# username is elastic
+# get password
+kubectl -n logging get secret elasticsearch-master-credentials -o json | jq -r '.data.password' | base64 --decode --ignore-garbage
+kubectl port-forward svc/kibana-kibana -n logging 5601:5601
+# api will be at http://localhost:5601
 ```
 
 ## How to tunnel (Redis)

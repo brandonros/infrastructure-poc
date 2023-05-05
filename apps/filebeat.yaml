@@ -1,21 +1,21 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: monitoring
+  name: logging
   labels:
-    name: monitoring
+    name: logging
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: loki
+  name: filebeat
   namespace: argocd
 spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
   destinations:
-  - namespace: monitoring
+  - namespace: logging
     server: https://kubernetes.default.svc
   orphanedResources:
     warn: false
@@ -25,14 +25,20 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: loki
+  name: filebeat
   namespace: argocd
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
-  project: loki
+    namespace: logging
+  project: filebeat
   source:
-    repoURL: https://github.com/grafana/helm-charts.git
-    targetRevision: main
-    path: ./charts/loki-stack
+    repoURL: https://github.com/elastic/helm-charts.git
+    targetRevision: v8.5.1
+    path: ./filebeat
+    helm:
+      values: |
+        resources:
+          requests:
+            cpu: 0
+            memory: 0
