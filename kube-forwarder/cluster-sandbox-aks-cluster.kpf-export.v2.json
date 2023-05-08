@@ -1,0 +1,106 @@
+{
+  "version": 2,
+  "clusters": [
+    {
+      "name": "sandbox-aks-cluster",
+      "_services": [
+        {
+          "namespace": "argocd",
+          "workloadType": "service",
+          "workloadName": "argocd-server",
+          "forwards": [
+            {
+              "localPort": 8080,
+              "remotePort": 443,
+              "id": "1c38d63a-595b-4220-9487-6e71957663a2"
+            }
+          ]
+        },
+        {
+          "namespace": "kubernetes-dashboard",
+          "workloadType": "service",
+          "workloadName": "kubernetes-dashboard",
+          "forwards": [
+            {
+              "localPort": 8443,
+              "remotePort": 443,
+              "id": "e848614f-cb7d-4054-bf54-fed66c4f07cc"
+            }
+          ]
+        },
+        {
+          "namespace": "jaeger",
+          "workloadType": "service",
+          "workloadName": "jaeger-jaeger-all-in-one",
+          "forwards": [
+            {
+              "localPort": 16686,
+              "remotePort": 16686,
+              "id": "391e7a27-bc6a-4a90-b6bd-37dde90938ff"
+            }
+          ]
+        },
+        {
+          "namespace": "monitoring",
+          "workloadType": "service",
+          "workloadName": "kube-prometheus-stack-grafana",
+          "forwards": [
+            {
+              "localPort": 3000,
+              "remotePort": 80,
+              "id": "121b3581-6ade-4baf-bde3-ee2ea2c5b9b7"
+            }
+          ]
+        },
+        {
+          "namespace": "monitoring",
+          "workloadType": "service",
+          "workloadName": "kube-prometheus-stack-prometheus",
+          "forwards": [
+            {
+              "localPort": 9090,
+              "remotePort": 9090,
+              "id": "c358a95b-bf08-4466-a02f-a8a84e097206"
+            }
+          ]
+        },
+        {
+          "namespace": "redis",
+          "workloadType": "service",
+          "workloadName": "redis-master",
+          "forwards": [
+            {
+              "localPort": 6379,
+              "remotePort": 6379,
+              "id": "4b9a86c3-a378-4be9-b7a8-f76ce33715fb"
+            }
+          ]
+        },
+        {
+          "namespace": "microservice-poc1",
+          "workloadType": "service",
+          "workloadName": "microservice-poc1-app",
+          "forwards": [
+            {
+              "localPort": 3001,
+              "remotePort": 3000,
+              "id": "85c58d35-a1ef-40e6-aee9-503d925da65f"
+            }
+          ]
+        },
+        {
+          "namespace": "microservice-poc2",
+          "workloadType": "service",
+          "workloadName": "microservice-poc2-app",
+          "forwards": [
+            {
+              "localPort": 3002,
+              "remotePort": 3000,
+              "id": "85c58d35-a1ef-40e6-aee9-503d925da65f"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

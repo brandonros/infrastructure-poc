@@ -10,6 +10,14 @@ git checkout vitalii
 kubectl apply -f apps/
 ```
 
+## How to tunnel (kube-forwarder)
+
+```shell
+# download https://github.com/pixel-point/kube-forwarder/releases/tag/v1.5.1
+# choose registered AKS cluster sandbox-aks-cluster
+# import kube-forwarder/cluster-sandbox-aks-cluster.kpf-export.v2.json
+```
+
 ## How to tunnel (ArgoCD)
 
 ```shell
@@ -51,24 +59,6 @@ kubectl port-forward svc/kube-prometheus-stack-grafana -n monitoring 3000:80
 ```shell
 kubectl port-forward svc/kube-prometheus-stack-prometheus -n monitoring 9090:9090
 # open browser to http://localhost:9090
-```
-
-## How to tunnel (Elasticsearch)
-
-```shell
-kubectl -n logging get secret elasticsearch-master-credentials -o json | jq -r '.data.password' | base64 --decode --ignore-garbage
-kubectl port-forward svc/elasticsearch-master-headless -n logging 9200:9200
-# api will be at http://localhost:9200
-```
-
-## How to tunnel (Kibana)
-
-```shell
-# username is elastic
-# get password
-kubectl -n logging get secret elasticsearch-master-credentials -o json | jq -r '.data.password' | base64 --decode --ignore-garbage
-kubectl port-forward svc/kibana-kibana -n logging 5601:5601
-# api will be at http://localhost:5601
 ```
 
 ## How to tunnel (Redis)
