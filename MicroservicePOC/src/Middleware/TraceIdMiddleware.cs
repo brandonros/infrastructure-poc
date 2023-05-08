@@ -24,7 +24,13 @@ namespace MicroservicePOC.Middleware
             {
                 context.Response.OnStarting(() =>
                 {
+                    // trace ID
                     context.Response.Headers["X-Trace-Id"] = activity.TraceId.ToString();
+                    // baggage
+                    foreach (var baggageItem in activity.Baggage)
+                    {
+                        context.Response.Headers[$"X-Trace-{baggageItem.Key}"] = baggageItem.Value;
+                    }
                     return Task.CompletedTask;
                 });
             }
