@@ -42,10 +42,19 @@ spec:
     path: ./charts/kube-prometheus-stack
     helm:
       values: |
+        datasources:
+          defaultDatasourceEnabled: false
         additionalDataSources:
+          - name: prometheus
+            type: prometheus
+            url: http://kube-prometheus-stack-prometheus.monitoring.svc:9090
+            isDefault: true
           - name: loki
             type: loki
-            url: http://loki.loki-stack:3100
+            url: http://loki.monitoring.svc:3100
+          - name: jaeger
+            type: jaeger
+            url: http://jaeger-jaeger-all-in-one.jaeger.svc:16686
         prometheus:
           additionalServiceMonitors:
             - name: microservice-poc-app
