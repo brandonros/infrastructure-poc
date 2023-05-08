@@ -3,6 +3,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 using StackExchange.Redis;
+using MicroservicePOC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -48,7 +49,7 @@ if (builder.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WeatherForecastApi v1"));
 }
-//app.UseHttpsRedirection();
+app.UseMiddleware<TraceIdMiddleware>();
 app.UseAuthorization();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.MapControllers();
