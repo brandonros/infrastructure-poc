@@ -79,7 +79,7 @@
         {
           "namespace": "microservice-poc1",
           "workloadType": "service",
-          "workloadName": "microservice-poc1-app",
+          "workloadName": "microservice-poc1",
           "forwards": [
             {
               "localPort": 3001,
@@ -91,7 +91,7 @@
         {
           "namespace": "microservice-poc2",
           "workloadType": "service",
-          "workloadName": "microservice-poc2-app",
+          "workloadName": "microservice-poc2",
           "forwards": [
             {
               "localPort": 3002,
