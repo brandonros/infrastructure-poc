@@ -12,6 +12,9 @@ RUN dotnet nuget add source \
     --store-password-in-clear-text
 # restore
 WORKDIR /src
+COPY src/appsettings.json appsettings.json
+COPY src/appsettings.Development.json appsettings.Development.json
+COPY src/NLog.config NLog.config
 COPY src/MicroservicePOC.csproj MicroservicePOC.csproj
 RUN dotnet restore
 # build
