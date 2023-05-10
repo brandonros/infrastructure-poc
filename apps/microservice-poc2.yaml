@@ -54,7 +54,7 @@ spec:
           imagePullPolicy: Always
         env:
           ASPNETCORE_ENVIRONMENT: Development
-          ASPNETCORE_URLS: http://*:3000
+          ASPNETCORE_URLS: http://0.0.0.0:3000
           ZIPKIN_EXPORTER_ENDPOINT: http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans
           APP_NAME: MicroservicePOC2
         podAnnotations:
