@@ -22,21 +22,30 @@ namespace MicroservicePOC.Middleware
             // If there is an activity, set the response header with the trace ID
             if (activity != null)
             {
-                context.Response.OnStarting(() =>
+                var traceId = activity.TraceId.ToString();
+                using (NLog.MappedDiagnosticsContext.SetScoped("TraceId", traceId))
                 {
-                    // trace ID
-                    context.Response.Headers["X-Trace-Id"] = activity.TraceId.ToString();
-                    // baggage
-                    foreach (var baggageItem in activity.Baggage)
-                    {
-                        context.Response.Headers[$"X-Trace-{baggageItem.Key}"] = baggageItem.Value;
-                    }
-                    return Task.CompletedTask;
-                });
-            }
+                    context.Response.OnStarting(() =>
+                        {
+                            // trace ID
+                            context.Response.Headers["X-Trace-Id"] = traceId;
+                            // baggage
+                            foreach (var baggageItem in activity.Baggage)
+                            {
+                                context.Response.Headers[$"X-Trace-{baggageItem.Key}"] = baggageItem.Value;
+                            }
+                            return Task.CompletedTask;
+                        });
 
-            // Call the next middleware in the pipeline
-            await _next(context);
+                    // Call the next middleware in the pipeline
+                    await _next(context);
+                }
+            }
+            else
+            {
+                // Call the next middleware in the pipeline
+                await _next(context);
+            }
         }
     }
 }
