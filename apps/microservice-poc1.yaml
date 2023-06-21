@@ -1,0 +1,63 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: microservice-poc1
+  labels:
+    name: microservice-poc1
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: microservice-poc1
+  name: redis-connection-string
+type: Opaque
+data:
+  value: cmVkaXMtbWFzdGVyLnJlZGlzLnN2YyxwYXNzd29yZD1tTU9XV1BXN0JJ
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: microservice-poc1
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: microservice-poc1
+    server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: false
+  sourceRepos:
+  - '*'
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: microservice-poc1
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: microservice-poc1
+  project: microservice-poc1
+  revisionHistoryLimit: 1
+  source:
+    repoURL: https://github.com/brandonros/infrastructure-poc.git
+    targetRevision: vitalii
+    path: ./MicroservicePOC/helm
+    helm:
+      values: |
+        image:
+          repository: azurepocsandboxaksacr.azurecr.io
+          tag: microservice-poc:latest
+          imagePullPolicy: Always
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
+          ASPNETCORE_URLS: http://0.0.0.0:3000
+          ZIPKIN_EXPORTER_ENDPOINT: http://jaeger-jaeger-all-in-one.jaeger.svc:9411/api/v2/spans
+          APP_NAME: MicroservicePOC1
+        podAnnotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/path: "/metrics"
+          prometheus.io/port: "3000"

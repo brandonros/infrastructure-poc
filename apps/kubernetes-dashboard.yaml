@@ -36,11 +36,6 @@ spec:
     repoURL: https://github.com/kubernetes/dashboard.git
     targetRevision: 42deb6b32a27296ac47d1f9839a68fab6053e5fc
     path: ./aio/deploy/recommended
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: false
 ---
 apiVersion: v1
 kind: ServiceAccount
